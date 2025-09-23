@@ -23,8 +23,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/onboard" element={<Onboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/subscriptions" element={<Subscriptions />} />
-          <Route path="/team" element={<Team />} />
+         <Route  path="/subscriptions"element={<div>{window.location.href = "https://clearskiesdashboard.netlify.app/"}</div> }/>
+         <Route path="/team" element={<Team />} />
           <Route path="/contact" element={<Contact />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
