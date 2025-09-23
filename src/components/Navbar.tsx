@@ -9,12 +9,12 @@ const Navbar = () => {
 
   const navLinks = [
     { href: "/onboard", label: "Onboard", external: false },
-    { href: "/dashboard", label: "Dashboard", external: false },
-    {
-      href: "https://clearskiesdashboard.netlify.app/",
-      label: "Subscriptions",
-      external: true,
-    },
+  {
+    href: "https://clearskiesdashboard.netlify.app/",
+    label: "Dashboard",
+    external: true,
+  },
+   { href: "/subscriptions", label: "Subscriptions" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
