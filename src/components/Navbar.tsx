@@ -8,9 +8,13 @@ const Navbar = () => {
   const location = useLocation();
 
   const navLinks = [
-    { href: "/onboard", label: "Onboard" },
-    { href: "/dashboard", label: "Dashboard" },
-    { href: "https://clearskiesdashboard.netlify.app/", label: "Subscriptions" },
+    { href: "/onboard", label: "Onboard", external: false },
+    { href: "/dashboard", label: "Dashboard", external: false },
+    {
+      href: "https://clearskiesdashboard.netlify.app/",
+      label: "Subscriptions",
+      external: true,
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
