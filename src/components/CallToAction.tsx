@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 const CallToAction = () => {
@@ -33,14 +34,16 @@ const CallToAction = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              variant="hero-outline" 
-              size="lg" 
-              className="text-lg px-10 py-4 h-16 group"
-            >
-              Get Clear Skies Today
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link to="/contact">
+              <Button 
+                variant="hero-outline" 
+                size="lg" 
+                className="text-lg px-10 py-4 h-16 group"
+              >
+                Get Clear Skies Today
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
           
           <div className="mt-12 text-white/70 text-sm">

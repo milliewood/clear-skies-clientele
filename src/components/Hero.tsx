@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import heroBackground from "@/assets/hero-background.jpg";
 
 const Hero = () => {
@@ -33,13 +34,15 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button 
-              variant="hero" 
-              size="lg" 
-              className="text-lg px-8 py-4 h-14"
-            >
-              Learn More
-            </Button>
+            <Link to="/team">
+              <Button 
+                variant="hero" 
+                size="lg" 
+                className="text-lg px-8 py-4 h-14"
+              >
+                Our Team
+              </Button>
+            </Link>
             <Button 
               variant="hero-outline" 
               size="lg" 
