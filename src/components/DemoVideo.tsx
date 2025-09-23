@@ -2,6 +2,9 @@ import { Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const DemoVideo = () => {
+  const videoUrl = "https://www.youtube.com/watch?v=ESU41Oc4feA";
+  const thumbnailUrl = "https://img.youtube.com/vi/ESU41Oc4feA/hqdefault.jpg"; // ✅ guaranteed to exist
+
   return (
     <section className="py-20 bg-gradient-to-b from-background to-accent/20">
       <div className="container mx-auto px-4">
@@ -15,34 +18,24 @@ const DemoVideo = () => {
         </div>
         
         <div className="max-w-4xl mx-auto">
-          <div className="relative aspect-video bg-gradient-primary rounded-2xl overflow-hidden shadow-elegant">
-            {/* YouTube Embed Placeholder */}
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+          <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elegant">
+            {/* YouTube Thumbnail */}
+            <img 
+              src={thumbnailUrl} 
+              alt="Demo video thumbnail" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+
+            {/* Overlay with Button */}
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
               <Button 
                 size="lg" 
                 className="bg-white/20 hover:bg-white/30 text-white border-white/30 backdrop-blur-sm"
-                onClick={() => {
-                  // Replace with actual YouTube embed or modal
-                  window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
-                }}
+                onClick={() => window.open(videoUrl, "_blank")}
               >
                 <Play className="w-6 h-6 mr-2" />
                 Watch Demo
               </Button>
-            </div>
-            
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute inset-0 bg-gradient-to-br from-eco-primary/40 to-primary/60"></div>
-              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-xl"></div>
-              <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-white/5 rounded-full blur-2xl"></div>
-            </div>
-            
-            {/* Play Icon Overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/30 hover:bg-white/30 transition-all duration-300 cursor-pointer">
-                <Play className="w-8 h-8 text-white ml-1" />
-              </div>
             </div>
           </div>
           

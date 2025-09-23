@@ -7,53 +7,53 @@ import { Linkedin, Github, Mail } from "lucide-react";
 const Team = () => {
   const teamMembers = [
     {
-      name: "Sarah Chen",
-      role: "CEO & Co-Founder",
-      bio: "Environmental engineer with 15+ years in methane detection technology. Former NASA researcher specializing in atmospheric gas monitoring.",
+      name: "Mildred Kigoi",
+      role: "CEO",
+      bio: "Visionary leader driving Clear Skies’ mission to revolutionize methane detection and create sustainable impact.",
       image: "",
-      initials: "SC",
+      initials: "MK",
       linkedin: "#",
-      email: "sarah@clearskies.com",
-      skills: ["Leadership", "Environmental Tech", "NASA Research"]
+      email: "mildred@clearskies.com",
+      skills: ["Leadership", "Strategy", "Sustainability"],
     },
     {
-      name: "Marcus Rodriguez",
-      role: "CTO & Co-Founder", 
-      bio: "Software architect and machine learning expert. Previously led AI initiatives at major energy companies for emission detection systems.",
+      name: "Greg Maina",
+      role: "CTO",
+      bio: "Technology innovator with expertise in building scalable systems and leading product development at Clear Skies.",
       image: "",
-      initials: "MR",
+      initials: "GM",
       linkedin: "#",
       github: "#",
-      email: "marcus@clearskies.com",
-      skills: ["AI/ML", "Software Architecture", "Energy Tech"]
+      email: "greg@clearskies.com",
+      skills: ["Software Architecture", "AI/ML", "IoT"],
     },
     {
-      name: "Dr. Elena Petrov",
-      role: "Head of Research",
-      bio: "PhD in Atmospheric Chemistry from MIT. Pioneer in real-time gas detection algorithms with 50+ published papers.",
+      name: "Eric Wainana",
+      role: "Tech Sales",
+      bio: "Focused on bridging technology and customer needs, ensuring Clear Skies delivers impactful solutions to industries worldwide.",
       image: "",
-      initials: "EP",
+      initials: "EW",
       linkedin: "#",
-      email: "elena@clearskies.com",
-      skills: ["Atmospheric Chemistry", "Research", "Algorithm Development"]
+      email: "eric@clearskies.com",
+      skills: ["Sales Strategy", "Client Relations", "Tech Solutions"],
     },
     {
-      name: "James Wilson",
-      role: "VP of Engineering",
-      bio: "Full-stack developer and systems engineer. Expert in building scalable industrial IoT solutions for energy sector monitoring.",
+      name: "Rose Wanjiru",
+      role: "Software Engineer",
+      bio: "Passionate developer building robust applications and contributing to Clear Skies’ advanced methane detection platforms.",
       image: "",
-      initials: "JW",
+      initials: "RW",
       linkedin: "#",
       github: "#",
-      email: "james@clearskies.com",
-      skills: ["Full-Stack Development", "IoT", "System Architecture"]
-    }
+      email: "rose@clearskies.com",
+      skills: ["Full-Stack Development", "APIs", "System Integration"],
+    },
   ];
 
   return (
     <main className="min-h-screen bg-gradient-subtle">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4">
         <div className="max-w-6xl mx-auto text-center">
@@ -72,7 +72,10 @@ const Team = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8">
             {teamMembers.map((member) => (
-              <Card key={member.name} className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/20 transition-all duration-300">
+              <Card
+                key={member.name}
+                className="bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/20 transition-all duration-300"
+              >
                 <CardContent className="p-8">
                   <div className="flex items-start gap-6">
                     <Avatar className="w-20 h-20">
@@ -81,28 +84,34 @@ const Team = () => {
                         {member.initials}
                       </AvatarFallback>
                     </Avatar>
-                    
+
                     <div className="flex-1">
                       <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
-                      <p className="text-primary font-semibold mb-3">{member.role}</p>
+                      <p className="text-primary font-semibold mb-3">
+                        {member.role}
+                      </p>
                       <p className="text-muted-foreground leading-relaxed mb-4">
                         {member.bio}
                       </p>
-                      
+
                       {/* Skills */}
                       <div className="flex flex-wrap gap-2 mb-4">
                         {member.skills.map((skill) => (
-                          <Badge key={skill} variant="secondary" className="text-xs">
+                          <Badge
+                            key={skill}
+                            variant="secondary"
+                            className="text-xs"
+                          >
                             {skill}
                           </Badge>
                         ))}
                       </div>
-                      
+
                       {/* Social Links */}
                       <div className="flex gap-3">
                         {member.linkedin && (
-                          <a 
-                            href={member.linkedin} 
+                          <a
+                            href={member.linkedin}
                             className="text-muted-foreground hover:text-primary transition-colors"
                             aria-label="LinkedIn"
                           >
@@ -110,16 +119,16 @@ const Team = () => {
                           </a>
                         )}
                         {member.github && (
-                          <a 
-                            href={member.github} 
+                          <a
+                            href={member.github}
                             className="text-muted-foreground hover:text-primary transition-colors"
                             aria-label="GitHub"
                           >
                             <Github className="w-5 h-5" />
                           </a>
                         )}
-                        <a 
-                          href={`mailto:${member.email}`} 
+                        <a
+                          href={`mailto:${member.email}`}
                           className="text-muted-foreground hover:text-primary transition-colors"
                           aria-label="Email"
                         >
@@ -145,22 +154,28 @@ const Team = () => {
             working together to make methane detection more accurate, accessible, and actionable 
             for industries worldwide.
           </p>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-3 text-primary">Innovation</h3>
+              <h3 className="text-xl font-semibold mb-3 text-primary">
+                Innovation
+              </h3>
               <p className="text-muted-foreground">
                 Pushing the boundaries of detection technology with cutting-edge AI and sensor fusion.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-3 text-primary">Sustainability</h3>
+              <h3 className="text-xl font-semibold mb-3 text-primary">
+                Sustainability
+              </h3>
               <p className="text-muted-foreground">
                 Committed to reducing environmental impact through advanced methane monitoring solutions.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="text-xl font-semibold mb-3 text-primary">Partnership</h3>
+              <h3 className="text-xl font-semibold mb-3 text-primary">
+                Partnership
+              </h3>
               <p className="text-muted-foreground">
                 Working closely with industry leaders to deliver practical, scalable solutions.
               </p>

@@ -12,6 +12,7 @@ import * as z from "zod";
 import { ArrowLeft, User, Building2, Factory } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,6 +25,8 @@ const formSchema = z.object({
 
 const Onboard = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
@@ -49,9 +52,34 @@ const Onboard = () => {
     },
   ];
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    // Handle form submission
+  // ✅ Submit handler
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to submit onboarding");
+      }
+
+      toast({
+        title: "🎉 You have successfully been onboarded",
+        description: "We will contact you soon.",
+      });
+
+      form.reset();
+      setCurrentStep(1);
+    } catch (error) {
+      console.error("Onboarding error:", error);
+      toast({
+        title: "❌ Submission failed",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   const nextStep = () => {
@@ -65,31 +93,29 @@ const Onboard = () => {
   return (
     <div className="min-h-screen bg-gradient-subtle">
       <Navbar />
-      
+
       <div className="container mx-auto px-4 pt-24 pb-12">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to home
             </Link>
-            
+
             <h1 className="text-3xl font-bold mb-2">Welcome to Clear Skies</h1>
             <p className="text-muted-foreground">
               Help us understand your needs so we can provide the best experience for you.
             </p>
           </div>
 
+          {/* Progress steps */}
           <div className="mb-8">
             <div className="flex justify-between items-center">
               {[1, 2, 3].map((step) => (
-                <div
-                  key={step}
-                  className={`flex items-center ${step < 3 ? "flex-1" : ""}`}
-                >
+                <div key={step} className={`flex items-center ${step < 3 ? "flex-1" : ""}`}>
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
                       currentStep >= step
@@ -111,6 +137,7 @@ const Onboard = () => {
             </div>
           </div>
 
+          {/* Card */}
           <Card className="border-0 shadow-elegant bg-card/50 backdrop-blur-sm">
             <CardHeader>
               <CardTitle>
@@ -124,10 +151,11 @@ const Onboard = () => {
                 {currentStep === 3 && "Help us understand your specific needs"}
               </CardDescription>
             </CardHeader>
-            
+
             <CardContent>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Step 1 */}
                   {currentStep === 1 && (
                     <div className="space-y-4 animate-fade-in">
                       <FormField
@@ -143,7 +171,7 @@ const Onboard = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="email"
@@ -157,7 +185,7 @@ const Onboard = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="company"
@@ -174,6 +202,7 @@ const Onboard = () => {
                     </div>
                   )}
 
+                  {/* Step 2 */}
                   {currentStep === 2 && (
                     <div className="animate-fade-in">
                       <FormField
@@ -220,6 +249,7 @@ const Onboard = () => {
                     </div>
                   )}
 
+                  {/* Step 3 */}
                   {currentStep === 3 && (
                     <div className="space-y-4 animate-fade-in">
                       <FormField
@@ -239,7 +269,7 @@ const Onboard = () => {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="benefits"
@@ -260,20 +290,21 @@ const Onboard = () => {
                     </div>
                   )}
 
+                  {/* Navigation buttons */}
                   <div className="flex justify-between pt-6">
                     {currentStep > 1 && (
                       <Button type="button" variant="outline" onClick={prevStep}>
                         Previous
                       </Button>
                     )}
-                    
+
                     <div className="ml-auto">
                       {currentStep < 3 ? (
                         <Button type="button" onClick={nextStep}>
                           Next
                         </Button>
                       ) : (
-                        <Button type="submit" className="bg-gradient-primary">
+                        <Button type="submit" className="bg-black">
                           Complete Onboarding
                         </Button>
                       )}

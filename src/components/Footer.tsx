@@ -30,7 +30,7 @@ const Footer = () => {
           </div>
           
           <div className="text-sm text-muted-foreground">
-            © 2024 Clear Skies. All rights reserved.
+            © 2025 Clear Skies. All rights reserved.
           </div>
         </div>
       </div>

@@ -18,9 +18,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-card/80 backdrop-blur-lg border border-border/50 rounded-2xl px-6 py-3 shadow-elegant">
       <div className="flex items-center justify-between">
-        <Link to="/" className="text-lg font-semibold text-primary">
-          Clear Skies
-        </Link>
+   
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-1">
