@@ -10,9 +10,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ArrowLeft, User, Building2, Factory } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import { useToast } from "@/components/ui/use-toast";
+
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,6 +25,7 @@ const formSchema = z.object({
 });
 
 const Onboard = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const { toast } = useToast();
 
@@ -53,34 +55,39 @@ const Onboard = () => {
   ];
 
   // ✅ Submit handler
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
+const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
 
-      if (!res.ok) {
-        throw new Error("Failed to submit onboarding");
-      }
-
-      toast({
-        title: "🎉 You have successfully been onboarded",
-        description: "We will contact you soon.",
-      });
-
-      form.reset();
-      setCurrentStep(1);
-    } catch (error) {
-      console.error("Onboarding error:", error);
-      toast({
-        title: "❌ Submission failed",
-        description: "Something went wrong. Please try again later.",
-        variant: "destructive",
-      });
+    if (!res.ok) {
+      throw new Error("Failed to submit onboarding");
     }
-  };
+
+    // ✅ Parse the response to get the user_id
+    const data = await res.json();
+    const userId = data.user_id; 
+
+    toast({
+      title: "🎉 Onboarding Successful",
+    });
+
+    form.reset();
+    
+    window.location.href = `http://localhost:8080/${userId}`;
+
+  } catch (error) {
+    console.error("Onboarding error:", error);
+    toast({
+      title: "❌ Submission failed",
+      description: "Something went wrong.",
+      variant: "destructive",
+    });
+  }
+};
 
   const nextStep = () => {
     if (currentStep < 3) setCurrentStep(currentStep + 1);
@@ -321,3 +328,4 @@ const Onboard = () => {
 };
 
 export default Onboard;
+
