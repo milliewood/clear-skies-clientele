@@ -54,40 +54,44 @@ const Onboard = () => {
     },
   ];
 
-  // ✅ Submit handler
-const onSubmit = async (values: z.infer<typeof formSchema>) => {
-  try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
-    });
+  // ✅ Updated Submit handler
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-    if (!res.ok) {
-      throw new Error("Failed to submit onboarding");
+      if (!res.ok) {
+        throw new Error("Failed to submit onboarding");
+      }
+
+      const data = await res.json();
+      const userId = data.user_id; 
+
+      // ✅ Updated Toast Notification
+      toast({
+        title: "Success",
+        description: "You have successfully been onboarded to Clear Skies. Redirecting you to your Control Center...",
+      });
+
+      form.reset();
+      
+      // ✅ Updated Redirection URL
+      setTimeout(() => {
+        window.location.href = `https://clearskiesdashboard.netlify.app/${userId}`;
+      }, 2000); // Small delay so they can read the toast
+
+    } catch (error) {
+      console.error("Onboarding error:", error);
+      toast({
+        title: "❌ Submission failed",
+        description: "Something went wrong.",
+        variant: "destructive",
+      });
     }
-
-    // ✅ Parse the response to get the user_id
-    const data = await res.json();
-    const userId = data.user_id; 
-
-    toast({
-      title: "🎉 Onboarding Successful",
-    });
-
-    form.reset();
-    
-    window.location.href = `http://localhost:8080/${userId}`;
-
-  } catch (error) {
-    console.error("Onboarding error:", error);
-    toast({
-      title: "❌ Submission failed",
-      description: "Something went wrong.",
-      variant: "destructive",
-    });
-  }
-};
+  };
 
   const nextStep = () => {
     if (currentStep < 3) setCurrentStep(currentStep + 1);
@@ -328,4 +332,3 @@ const onSubmit = async (values: z.infer<typeof formSchema>) => {
 };
 
 export default Onboard;
-
