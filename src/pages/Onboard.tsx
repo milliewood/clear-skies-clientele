@@ -316,8 +316,19 @@ const Onboard = () => {
                           Next
                         </Button>
                       ) : (
-                        <Button type="submit" className="bg-black">
-                          Complete Onboarding
+                        <Button 
+                          type="submit" 
+                          className="bg-black min-w-[160px]" 
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Submitting...
+                            </>
+                          ) : (
+                            "Complete Onboarding"
+                          )}
                         </Button>
                       )}
                     </div>
