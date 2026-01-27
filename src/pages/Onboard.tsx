@@ -27,6 +27,7 @@ const formSchema = z.object({
 const Onboard = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,8 +55,9 @@ const Onboard = () => {
     },
   ];
 
-  // ✅ Updated Submit handler
+// ✅ Updated Submit handler with Spinner Logic
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
         method: "POST",
@@ -70,29 +72,28 @@ const Onboard = () => {
       const data = await res.json();
       const userId = data.user_id; 
 
-      // ✅ Updated Toast Notification
       toast({
         title: "Success",
-        description: "You have successfully been onboarded to Clear Skies. Redirecting you to your Control Center...",
+        description: "You have successfully been onboarded. Redirecting to your Control Center...",
       });
 
       form.reset();
       
-      // ✅ Updated Redirection URL
+      // Delay for the redirect
       setTimeout(() => {
         window.location.href = `https://clearskiesdashboard.netlify.app/${userId}`;
-      }, 2000); // Small delay so they can read the toast
+      }, 2000);
 
     } catch (error) {
       console.error("Onboarding error:", error);
+      setIsSubmitting(false);
       toast({
         title: "❌ Submission failed",
-        description: "Something went wrong.",
+        description: "Something went wrong. Please check your connection and try again.",
         variant: "destructive",
       });
     }
   };
-
   const nextStep = () => {
     if (currentStep < 3) setCurrentStep(currentStep + 1);
   };
