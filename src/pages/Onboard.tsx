@@ -85,7 +85,7 @@ const Onboard = () => {
 
       // ✅ Redirect to absolute URL with the userId appended
       setTimeout(() => {
-        window.location.href = `https://clearskiesdashboard.netlify.app/${userId}`;
+    window.location.href = "https://clearskiesdashboard.netlify.app";
       }, 1500);
 
     } catch (error) {
