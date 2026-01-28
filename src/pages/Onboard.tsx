@@ -61,7 +61,7 @@ const Onboard = () => {
     },
   ];
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+ const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/onboarding`, {
@@ -70,26 +70,22 @@ const Onboard = () => {
         body: JSON.stringify(values),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to submit onboarding");
-      }
+      if (!res.ok) throw new Error("Failed to submit onboarding");
 
       const data = await res.json();
-      
-      // ✅ Store status and ID for internal use (keeps URL clean)
+      const userId = data.user_id;
+
+      // ✅ Store status locally
       localStorage.setItem("onboardingInfo", "true");
-      if (data.user_id) {
-        localStorage.setItem("userId", data.user_id);
-      }
 
       toast({
         title: "Success",
-        description: "You have successfully been onboarded. Redirecting to your Control Center...",
+        description: "Redirecting to your Control Center...",
       });
 
-      // ✅ Redirect to clean /dashboard URL instead of /:userId
+      // ✅ Redirect to absolute URL with the userId appended
       setTimeout(() => {
-        navigate("/dashboard");
+        window.location.href = `https://clearskiesdashboard.netlify.app/${userId}`;
       }, 1500);
 
     } catch (error) {
