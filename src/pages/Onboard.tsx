@@ -75,21 +75,21 @@ const Onboard = () => {
       }
 
       const data = await res.json();
-      const userId = data.user_id; 
-
-      // ✅ Store onboarding status so App.tsx effect doesn't re-trigger
+      
+      // ✅ Store status and ID for internal use (keeps URL clean)
       localStorage.setItem("onboardingInfo", "true");
+      if (data.user_id) {
+        localStorage.setItem("userId", data.user_id);
+      }
 
       toast({
         title: "Success",
         description: "You have successfully been onboarded. Redirecting to your Control Center...",
       });
 
-      // ✅ REMOVED form.reset() to prevent blank screen
-      
-      // ✅ Using navigate for instant redirection
+      // ✅ Redirect to clean /dashboard URL instead of /:userId
       setTimeout(() => {
-        navigate(`/${userId}`);
+        navigate("/dashboard");
       }, 1500);
 
     } catch (error) {
@@ -104,7 +104,6 @@ const Onboard = () => {
   };
 
   const nextStep = async () => {
-    // Validate specific fields before moving to next step
     const fieldsByStep: Record<number, (keyof z.infer<typeof formSchema>)[]> = {
       1: ["name", "email"],
       2: ["userType"],
